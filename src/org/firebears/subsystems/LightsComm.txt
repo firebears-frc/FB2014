@@ -1,0 +1,88 @@
+//created by jeron lau
+
+CONNECTION PROTOCOL BETWEEN CRIO AND ARDUINO[lights]
+
+	CRio Always sends the message first.  Without the CRio sending
+	messages arduino doesn't send any back. Each message is 2 bytes.
+
+ARDIUNO->CRIO
+
+	First Byte
+a	0x30	Has Set strip 1
+a	0x31	Has Set strip 2
+a	0x32	Has Set strip 3
+a	0x33	Has Set strip 1&2
+a	0x34	Has Set strip 2&3
+a	0x35	Has Set strip 1&3
+a	0x36	Has Set all strips
+b	0x37	Verification
+c	0x38	Error
+a	0x39	Has Set copper strip 1
+a	0x3A	Has Set copper strip 2
+a	0x3B	Has Set copper strip 3
+a	0x3C	Has Set copper strip 1&2
+a	0x3D	Has Set copper strip 2&3
+a	0x3E	Has Set copper strip 1&3
+        0x3F    Has Set Default Color or String
+
+CRIO->ARDUINO
+
+	First byte
+a	0x10	Set all strips to animation
+a	0x11	Set strip 1 to animation
+a	0x12	Set strip 2 to animation
+a	0x13	Set strip 3 to animation
+a	0x14	Set strips 1 & 2 to animation
+a	0x15	Set strips 2 & 3 to animation
+a	0x16	Set strips 3 & 1 to animation
+b	0x17	Test connection [ REQUEST VERIFICATION ]
+d	0x18	Set default color ( used in one color animation ) / (Also Alliance)
+e	0x19	Set default string ( used in words animation )
+a       0x1A    Set copper strip 1 to animation
+a       0x1B    Set copper strip 2 to animation
+a       0x1C    Set copper strip 3 to animation
+a       0x1D    Set copper strips 1&2 to animation
+a       0x1E    Set copper strips 2&3 to animation
+a       0x1F    Set copper strips 3&1 to animation
+
+SECOND BYTE-A
+	0x21	Fire[bears] Animation
+	0x22	Moving Animation
+	0x23	Blink Animation
+	0x24	Bouncing Animation
+	0x25	Switching Animations
+	0x26	k-Spinning Animation
+	0x27	k-Pulse Animation
+	0x28	Growing Fire Animation [ turns to Fire Animation ]
+	0x29	One color animation
+        0x2A    Glowing Animation
+
+SECOND BYTE-B
+	0x4C	"I'm connected!" (magic byte)
+
+SECOND BYTE-C
+	0x50	couldn't set strip: no such strip
+	0x51	request without send
+	0x52	wrong second byte[verification]
+	0x53	couldn't set strip: no such animation
+	0x54	not connected
+
+SECOND BYTE-D
+        0x00    (Blue Alliance)
+	0x01	Bright Red(Also Red Alliance)
+	0x02	Medium Red
+	0x03	Dull Red
+	0x04	Bright Yellow
+	0x05	Medium Yellow 1
+	0x06	Medium Yellow 2
+	0x07	Medium Orange
+	0x08	Dull Orange
+	0x09	Bright Orange
+	0x0A	Alien blue
+
+SECOND BYTE-E
+	0x60	"Fire Bears"
+	0x61	"Throw"
+	0x62	"2846"
+	0x63	"BURN"
+	0x64	"FLING"
