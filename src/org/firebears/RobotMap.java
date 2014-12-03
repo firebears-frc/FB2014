@@ -1,5 +1,7 @@
 package org.firebears;
 
+import org.firebears.subsystems.PidRobotDrive;
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
@@ -110,8 +112,8 @@ public class RobotMap {
     private static Preferences preferences;
     
     public static void init() {
-
-        //Grab angles stored in preferences and pur into angle "constants" variables
+    	
+        //Grab angles stored in preferences and put into angle "constants" variables
         preferences = Preferences.getInstance();
         
         fwAngleLo = preferences.getDouble(FW_ANGLE_LO,86);
@@ -253,14 +255,15 @@ public class RobotMap {
         }
 
         try {
-            chassisLeftEncoder = new Encoder(1, 4, 1, 5, false, EncodingType.k4X);
+        	//k4x = recognize 2 directions
+            chassisLeftEncoder = new Encoder(1, 3, 1, 4, false, EncodingType.k4X);
             LiveWindow.addSensor("Chassis", "LeftEncoder", chassisLeftEncoder);
-            chassisLeftEncoder.setDistancePerPulse(1.0);
+            chassisLeftEncoder.setDistancePerPulse(1.0); //Distance is how much distance per cycle 
             chassisLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
             chassisLeftEncoder.start();
             chassisRightEncoder = new Encoder(1, 1, 1, 2, false, EncodingType.k4X);
             LiveWindow.addSensor("Chassis", "RightEncoder", chassisRightEncoder);
-            chassisRightEncoder.setDistancePerPulse(1.0);
+            chassisRightEncoder.setDistancePerPulse(1.0); //Distance is how much distance per cycle
             chassisRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
             chassisRightEncoder.start();
         } catch (Exception ex) {
@@ -318,7 +321,8 @@ public class RobotMap {
 //        bkAngleLoScore = preferences.getDouble(BK_ANGLE_LO_SCORE,266);
 //        bkAnglePassHi = preferences.getDouble(BK_ANGLE_PASS_HI,223);
         
-        
+    	chassisRightEncoder.setSamplesToAverage(100);
+    	chassisLeftEncoder.setSamplesToAverage(100);
         
     }
 }

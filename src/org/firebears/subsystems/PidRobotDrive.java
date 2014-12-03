@@ -1,4 +1,4 @@
-package org.firebears;
+package org.firebears.subsystems;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.can.CANNotInitializedException;
@@ -149,8 +149,8 @@ public class PidRobotDrive extends RobotDrive {
 
         public void pidWrite(double output) {
             double speed = limit(output) * m_maxOutput;
-            if (rearMotor != null) {
-                rearMotor.set(speed * m_invertedMotors[kFrontLeft_val], m_syncGroup);
+            if (frontMotor != null) {
+                frontMotor.set(speed * m_invertedMotors[kFrontLeft_val], m_syncGroup);
             }
             rearMotor.set(speed * m_invertedMotors[kRearLeft_val], m_syncGroup);
         }
